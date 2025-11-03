@@ -1,5 +1,5 @@
 
-# BadGroceries.reportThis <!-- omit in toc -->
+# BadGroceries.report <!-- omit in toc -->
 BadGroceries.report is a web platform for exploring corporate ownership and subsidiary relationships. It compiles data from multiple public and commercial sources to show how companies are connected, who owns whom, and how those structures change over time. Users can search for companies, view interactive ownership graphs, and review or publish verified records for public access. The goal is to make corporate transparency easier to understand and navigate for researchers, journalists, and the general public.
 
 
