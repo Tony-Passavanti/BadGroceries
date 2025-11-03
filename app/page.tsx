@@ -1,4 +1,4 @@
-import SignInCallToAction from '@/components/signInCallToAction'
+import HomePage from '@/components/searchForCompany';
 import { createClient } from '@/utils/supabase/server'
 
 export default async function Home() {
@@ -8,11 +8,7 @@ export default async function Home() {
 
   return (
     <main>
-      {user ? (
-        <h2>Go to dashboard</h2>
-      ) : (
-        <SignInCallToAction />
-      )}
+      <HomePage />
     </main>
   )
 }
