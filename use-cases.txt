@@ -1,0 +1,9 @@
+USE CASES
+=========
+
+login
+register account
+add tag to company
+publish company records
+search for company
+view subsidiary DAG
