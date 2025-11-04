@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { signIn, signUp } from '@/utils/supabase/signup';
 
 type AuthModalProps = {
@@ -69,7 +69,9 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             ? 'Check your email to confirm your account.'
             : 'You are now signed in.'
         );
-        // setTimeout(onClose, 1200);
+        if (!isSignUp) {
+        setTimeout(onClose, 1200);
+        }
       }
     } catch (err: any) {
       setError(err?.message ?? 'Unexpected error');
