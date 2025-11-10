@@ -47,3 +47,5 @@ next-env.d.ts
 
 # custom
 hidden/
+CLAUDE.*
+.claude/
