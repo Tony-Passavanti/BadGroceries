@@ -18,64 +18,27 @@ export default function ViewSubsidiaryTree({
   subsidiaries
 }: ViewSubsidiaryTreeProps) {
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      padding: '2rem',
-      gap: '2rem'
-    }}>
+    <div className="flex flex-col items-center p-8 gap-8">
       {/* Parent Company */}
-      <div style={{
-        padding: '1.5rem 2rem',
-        border: '3px solid #2563eb',
-        borderRadius: '12px',
-        backgroundColor: '#dbeafe',
-        fontSize: '1.25rem',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        minWidth: '250px',
-        boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-      }}>
+      <div className="px-8 py-6 border-2 border-text-bright rounded-xl bg-bg-panel text-xl font-bold text-center min-w-[250px] shadow-lg text-text-bright">
         {companyName}
       </div>
 
       {/* Connecting Lines Container */}
       {subsidiaries.length > 0 && (
-        <div style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          width: '100%'
-        }}>
+        <div className="flex flex-col items-center w-full">
           {/* Vertical Line from Parent */}
-          <div style={{
-            width: '3px',
-            height: '40px',
-            backgroundColor: '#6b7280'
-          }} />
+          <div className="w-[3px] h-10 bg-border" />
 
           {/* Horizontal Line */}
           {subsidiaries.length > 1 && (
-            <div style={{
-              width: `${Math.min(subsidiaries.length * 220, 1200)}px`,
-              height: '3px',
-              backgroundColor: '#6b7280',
-              position: 'relative'
-            }}>
+            <div className="h-[3px] bg-border relative" style={{ width: `${Math.min(subsidiaries.length * 220, 1200)}px` }}>
               {/* Vertical Lines Down to Children */}
               {subsidiaries.map((_, index) => (
                 <div
                   key={index}
-                  style={{
-                    position: 'absolute',
-                    left: `${(100 / subsidiaries.length) * index + (50 / subsidiaries.length)}%`,
-                    top: '0',
-                    width: '3px',
-                    height: '40px',
-                    backgroundColor: '#6b7280',
-                    transform: 'translateX(-50%)'
-                  }}
+                  className="absolute top-0 w-[3px] h-10 bg-border -translate-x-1/2"
+                  style={{ left: `${(100 / subsidiaries.length) * index + (50 / subsidiaries.length)}%` }}
                 />
               ))}
             </div>
@@ -83,56 +46,26 @@ export default function ViewSubsidiaryTree({
 
           {/* Single Vertical Line for Single Child */}
           {subsidiaries.length === 1 && (
-            <div style={{
-              width: '3px',
-              height: '40px',
-              backgroundColor: '#6b7280'
-            }} />
+            <div className="w-[3px] h-10 bg-border" />
           )}
 
           {/* Subsidiaries Row */}
-          <div style={{
-            display: 'flex',
-            gap: '1.5rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            maxWidth: '1400px',
-            marginTop: subsidiaries.length > 1 ? '0' : '0'
-          }}>
+          <div className="flex gap-6 justify-center flex-wrap max-w-[1400px]">
             {subsidiaries.map((subsidiary, index) => (
               <div
                 key={index}
-                style={{
-                  padding: '1rem 1.5rem',
-                  border: '2px solid #10b981',
-                  borderRadius: '8px',
-                  backgroundColor: '#d1fae5',
-                  fontSize: '0.95rem',
-                  textAlign: 'center',
-                  minWidth: '200px',
-                  maxWidth: '250px',
-                  boxShadow: '0 2px 4px rgba(0, 0, 0, 0.08)'
-                }}
+                className="px-6 py-4 border-2 border-text-secondary rounded-lg bg-bg-panel text-sm text-center min-w-[200px] max-w-[250px] shadow-sm"
               >
-                <div style={{ fontWeight: '600', marginBottom: '0.5rem' }}>
+                <div className="font-semibold mb-2 text-text-bright">
                   {subsidiary.name}
                 </div>
                 {subsidiary.jurisdiction && (
-                  <div style={{
-                    fontSize: '0.85rem',
-                    color: '#374151',
-                    marginTop: '0.25rem'
-                  }}>
+                  <div className="text-xs text-text-primary mt-1">
                     {subsidiary.jurisdiction}
                   </div>
                 )}
                 {subsidiary.ownershipPercentage && (
-                  <div style={{
-                    fontSize: '0.8rem',
-                    color: '#6b7280',
-                    marginTop: '0.25rem',
-                    fontStyle: 'italic'
-                  }}>
+                  <div className="text-xs text-text-secondary mt-1 italic">
                     {subsidiary.ownershipPercentage}% ownership
                   </div>
                 )}
@@ -144,11 +77,7 @@ export default function ViewSubsidiaryTree({
 
       {/* No Subsidiaries Message */}
       {subsidiaries.length === 0 && (
-        <div style={{
-          padding: '1rem',
-          color: '#6b7280',
-          fontStyle: 'italic'
-        }}>
+        <div className="p-4 text-text-secondary italic">
           No subsidiaries listed
         </div>
       )}

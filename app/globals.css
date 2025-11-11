@@ -1,31 +1,46 @@
 @import "tailwindcss";
 
-
-/* BACKGROUND GREY: #191A1A */
-/* FOREGROUND BLACK: #080808 */
-/* FONT WHITE: #DCDAD8 */
-
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-main: #141414;
+  --bg-nav: #252525;
+  --bg-panel: #323333;
+  --hover: #494949;
+  --border: #5f5f5e;
+  --text-secondary: #7e7c7c;
+  --text-primary: #e6e6e6;
+  --text-bright: #ffffff;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-bg-main: var(--bg-main);
+  --color-bg-nav: var(--bg-nav);
+  --color-bg-panel: var(--bg-panel);
+  --color-hover: var(--hover);
+  --color-border: var(--border);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-primary: var(--text-primary);
+  --color-text-bright: var(--text-bright);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background-color: var(--bg-main);
+  color: var(--text-primary);
+  font-family: 'Segoe UI', sans-serif;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+header, nav {
+  background-color: var(--bg-nav);
+}
+
+button {
+  color: var(--text-bright);
+  border: 1px solid var(--border);
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: var(--hover);
 }
