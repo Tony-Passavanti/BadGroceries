@@ -9,13 +9,14 @@ const STUB_SUBSIDIARIES = [
   { name: "fuck you jerry" }
 ];
 
-export default function Viewgraph({ searchParams }: { searchParams: {heading?: string } }) {
+export default async function Viewgraph({ searchParams }: { searchParams: Promise<{heading?: string }> }) {
+    const params = await searchParams;
     return (
         <main>
-            {/* <ViewSubsidiaryTree
-                companyName={searchParams.heading || 'Unknown Company'}
+            <ViewSubsidiaryTree
+                companyName={params.heading || 'Unknown Company'}
                 subsidiaries={ STUB_SUBSIDIARIES }
-            /> */}
+            />
         </main>
     );
 }

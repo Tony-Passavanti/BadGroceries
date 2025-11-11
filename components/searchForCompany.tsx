@@ -63,7 +63,7 @@ export default function HomePage() {
       {data && data.length > 0 && (
         <div className="mt-5 space-y-4">
           {data.map((item: any, i: number) => (
-            <Link href={{pathname: '/viewgraph', query: {heading: item?.companyName}}} key={i}>
+            <Link href={`/viewgraph?heading=${encodeURIComponent(item?.companyName || '')}`} key={i}>
               <div className="company-clickable border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
                 <strong className="text-xl text-text-bright">{item.companyName}</strong>
                 <ul className="mt-2 text-text-primary">

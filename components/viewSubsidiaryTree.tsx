@@ -11,10 +11,8 @@ interface ViewSubsidiaryTreeProps {
   subsidiaries: Subsidiary[];
 }
 
-export default function ViewSubsidiaryTree({
-  companyName,
-  subsidiaries
-}: ViewSubsidiaryTreeProps) {
+export default function ViewSubsidiaryTree( { companyName, subsidiaries } : ViewSubsidiaryTreeProps) 
+{
   return (
     <div className="flex flex-col items-center p-8 gap-8">
       {/* parent company */}
@@ -73,7 +71,4 @@ export default function ViewSubsidiaryTree({
   );
 }
 
-// works normally in TypeScript
-localStorage.setItem("username", "Logan");
-const name = localStorage.getItem("username");
-console.log(name);
+
