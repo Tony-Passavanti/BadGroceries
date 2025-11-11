@@ -1,6 +1,7 @@
 
 # usage:
 #   make install
+#   make ci
 #   make dev
 #   make build
 #   make start
@@ -17,6 +18,10 @@ BUILD_DIR = .next
 install:
 	@echo "Installing dependencies..."
 	$(PKG_MANAGER) install
+
+ci:
+	@echo "Installing dependencies from lock file..."
+	$(PKG_MANAGER) ci
 
 dev:
 	@echo "Starting development server..."
@@ -37,17 +42,18 @@ clean:
 	rm -rf .turbo
 	rm -rf .vercel
 
-rebuild: clean install build
+rebuild: clean ci build
 
 help:
 	@echo ""
 	@echo "Available targets:"
-	@echo "  install     Install dependencies"
+	@echo "  install     Install dependencies from package.json"
+	@echo "  ci          Install dependencies from lock file (recommended)"
 	@echo "  dev         Run local development server"
 	@echo "  build       Build for production"
 	@echo "  start       Start production server"
 	@echo "  clean       Remove build artifacts"
-	@echo "  rebuild     Clean, install, and rebuild project"
+	@echo "  rebuild     Clean, install from lock, and rebuild project"
 	@echo ""
 
-.PHONY: install dev build start clean rebuild help
+.PHONY: install ci dev build start clean rebuild help

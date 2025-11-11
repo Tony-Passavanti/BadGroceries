@@ -83,14 +83,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
   return (
     <div className="fixed inset-0 z-[80]">
       <div
-        className="absolute inset-0 bg-black/50"
+        className="absolute inset-0 bg-black/70"
         onClick={onClose}
         aria-hidden="true"
       />
       <div className="flex h-full items-center justify-center p-6">
-        <div className="relative mx-4 w-full max-w-md max-h-[calc(100vh-3rem)] overflow-y-auto rounded-2xl bg-white p-6 shadow-xl">
+        <div className="relative mx-4 w-full max-w-md max-h-[calc(100vh-3rem)] overflow-y-auto rounded-2xl bg-bg-panel border border-border p-6 shadow-xl">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-text-bright">
               {isSignUp ? 'Create your account' : 'Sign in'}
             </h2>
             <button
@@ -98,7 +98,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                 toggleMode('sign-in');
                 onClose();
               }}
-              className="rounded-md px-2 py-1 text-sm hover:bg-gray-100"
+              className="rounded-md px-2 py-1 text-sm text-text-bright border-0"
               aria-label="Close"
             >
               ×
@@ -107,14 +107,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1">
-              <label className="block text-sm font-medium">
+              <label className="block text-sm font-medium text-text-primary">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-black"
+                className="w-full rounded-lg border border-border bg-bg-main text-text-primary px-3 py-2 outline-none focus:border-text-bright"
                 placeholder="you@example.com"
                 autoComplete="email"
                 required
@@ -122,12 +122,12 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </div>
 
             <div className="space-y-1">
-              <label className="block text-sm font-medium">Password</label>
+              <label className="block text-sm font-medium text-text-primary">Password</label>
               <input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-black"
+                className="w-full rounded-lg border border-border bg-bg-main text-text-primary px-3 py-2 outline-none focus:border-text-bright"
                 placeholder="••••••••"
                 autoComplete={isSignUp ? 'new-password' : 'current-password'}
                 required
@@ -137,14 +137,14 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
 
                         {isSignUp && (
               <div className="space-y-1">
-                <label className="block text-sm font-medium">
+                <label className="block text-sm font-medium text-text-primary">
                   Confirm password
                 </label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:border-black"
+                  className="w-full rounded-lg border border-border bg-bg-main text-text-primary px-3 py-2 outline-none focus:border-text-bright"
                   placeholder="••••••••"
                   autoComplete="new-password"
                   required
@@ -163,7 +163,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             <button
               type="submit"
               disabled={submitting}
-              className="inline-flex w-full items-center justify-center rounded-lg bg-black px-4 py-2 text-white disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center rounded-lg px-4 py-2 disabled:opacity-60"
             >
               {submitting
                 ? isSignUp
@@ -175,16 +175,16 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             </button>
           </form>
 
-          <p className="mt-3 text-xs text-gray-500">
+          <p className="mt-3 text-xs text-text-secondary">
             By continuing, you agree to our Terms and Privacy Policy.
           </p>
 
-          <p className="mt-4 text-sm text-gray-700">
+          <p className="mt-4 text-sm text-text-primary">
             {isSignUp ? 'Already have an account? ' : 'New user? '}
             <button
               type="button"
               onClick={() => toggleMode(isSignUp ? 'sign-in' : 'sign-up')}
-              className="font-medium text-black underline"
+              className="font-medium text-text-bright underline border-0"
             >
               {isSignUp ? 'Sign in' : 'Create an account'}
             </button>

@@ -13,16 +13,16 @@ type MenuBarProps = {
 export default function MenuBar({ user, onSignInClick, onSignOut }: MenuBarProps) {
 
   return (
-    <header className="sticky top-0 z-50 border-b bg-white/90 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-border bg-bg-nav">
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <div className="flex items-center gap-6 text-sm">
-          <Link href="/" className="text-lg font-semibold">
+        <div className="flex items-center gap-6 text-sm text-text-primary">
+          <Link href="/" className="text-lg font-semibold text-text-bright">
             BadGroceries
           </Link>
-          <Link href="/companies" className="hover:underline">
+          <Link href="/" className="hover:underline hover:text-text-bright">
             Search For Companies
           </Link>
-          <Link href="/about" className="hover:underline">
+          <Link href="/about" className="hover:underline hover:text-text-bright">
             About
           </Link>
         </div>
@@ -31,14 +31,14 @@ export default function MenuBar({ user, onSignInClick, onSignOut }: MenuBarProps
             <button
                 type="button"
                 onClick={onSignOut}
-                className="rounded-full bg-gray-200 px-4 py-2 text-sm font-medium text-gray-800 hover:bg-gray-300"
+                className="rounded-full px-4 py-2 text-sm font-medium"
           >
             Sign out
           </button> ) : (
           <button
             type="button"
             onClick={onSignInClick}
-            className="rounded-full bg-black px-4 py-2 text-sm font-medium text-white hover:bg-gray-900"
+            className="rounded-full px-4 py-2 text-sm font-medium"
           >
             Sign in
           </button>
