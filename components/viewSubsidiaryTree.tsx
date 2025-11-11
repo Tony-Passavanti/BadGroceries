@@ -4,8 +4,6 @@ import React from 'react';
 
 interface Subsidiary {
   name: string;
-  jurisdiction?: string;
-  ownershipPercentage?: string;
 }
 
 interface ViewSubsidiaryTreeProps {
@@ -19,21 +17,21 @@ export default function ViewSubsidiaryTree({
 }: ViewSubsidiaryTreeProps) {
   return (
     <div className="flex flex-col items-center p-8 gap-8">
-      {/* Parent Company */}
+      {/* parent company */}
       <div className="px-8 py-6 border-2 border-text-bright rounded-xl bg-bg-panel text-xl font-bold text-center min-w-[250px] shadow-lg text-text-bright">
         {companyName}
       </div>
 
-      {/* Connecting Lines Container */}
+      {/* connecting lines container */}
       {subsidiaries.length > 0 && (
         <div className="flex flex-col items-center w-full">
-          {/* Vertical Line from Parent */}
+          {/* vertical line from parent */}
           <div className="w-[3px] h-10 bg-border" />
 
-          {/* Horizontal Line */}
+          {/* horizontal line */}
           {subsidiaries.length > 1 && (
             <div className="h-[3px] bg-border relative" style={{ width: `${Math.min(subsidiaries.length * 220, 1200)}px` }}>
-              {/* Vertical Lines Down to Children */}
+              {/* vertical lines down to children */}
               {subsidiaries.map((_, index) => (
                 <div
                   key={index}
@@ -44,38 +42,28 @@ export default function ViewSubsidiaryTree({
             </div>
           )}
 
-          {/* Single Vertical Line for Single Child */}
+          {/* single vertical line for single child */}
           {subsidiaries.length === 1 && (
             <div className="w-[3px] h-10 bg-border" />
           )}
 
-          {/* Subsidiaries Row */}
+          {/* subsidiaries row */}
           <div className="flex gap-6 justify-center flex-wrap max-w-[1400px]">
             {subsidiaries.map((subsidiary, index) => (
               <div
                 key={index}
                 className="px-6 py-4 border-2 border-text-secondary rounded-lg bg-bg-panel text-sm text-center min-w-[200px] max-w-[250px] shadow-sm"
               >
-                <div className="font-semibold mb-2 text-text-bright">
+                <div className="font-semibold text-text-bright">
                   {subsidiary.name}
                 </div>
-                {subsidiary.jurisdiction && (
-                  <div className="text-xs text-text-primary mt-1">
-                    {subsidiary.jurisdiction}
-                  </div>
-                )}
-                {subsidiary.ownershipPercentage && (
-                  <div className="text-xs text-text-secondary mt-1 italic">
-                    {subsidiary.ownershipPercentage}% ownership
-                  </div>
-                )}
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* No Subsidiaries Message */}
+      {/* no subsidiaries message */}
       {subsidiaries.length === 0 && (
         <div className="p-4 text-text-secondary italic">
           No subsidiaries listed

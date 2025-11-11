@@ -19,7 +19,7 @@ export default function MenuBar({ user, onSignInClick, onSignOut }: MenuBarProps
           <Link href="/" className="text-lg font-semibold text-text-bright">
             BadGroceries
           </Link>
-          <Link href="/companies" className="hover:underline hover:text-text-bright">
+          <Link href="/" className="hover:underline hover:text-text-bright">
             Search For Companies
           </Link>
           <Link href="/about" className="hover:underline hover:text-text-bright">

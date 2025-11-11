@@ -41,7 +41,7 @@ export default function HomePage() {
 
   return (
     <main className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-text-bright">Subsidiary Finder</h1>
+      <h1 className="text-2xl font-bold text-text-bright">Company Search</h1>
 
       <div className="flex gap-2 mt-3">
         <input
