@@ -72,3 +72,8 @@ export default function ViewSubsidiaryTree({
     </div>
   );
 }
+
+// works normally in TypeScript
+localStorage.setItem("username", "Logan");
+const name = localStorage.getItem("username");
+console.log(name);
