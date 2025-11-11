@@ -12,10 +12,10 @@ const STUB_SUBSIDIARIES = [
 export default function Viewgraph({ searchParams }: { searchParams: {heading?: string } }) {
     return (
         <main>
-            <ViewSubsidiaryTree
+            {/* <ViewSubsidiaryTree
                 companyName={searchParams.heading || 'Unknown Company'}
                 subsidiaries={ STUB_SUBSIDIARIES }
-            />
+            /> */}
         </main>
     );
 }
