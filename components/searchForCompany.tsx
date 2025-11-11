@@ -31,6 +31,12 @@ export default function HomePage() {
     setData(json.data || []);
   }
 
+  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  }
+
   /* async function supabaseSearch() {
     setError(null);
     setData(null);
@@ -45,6 +51,7 @@ export default function HomePage() {
 
       <div className="flex gap-2 mt-3">
         <input
+          onKeyDown={handleSubmit}
           value={company}
           onChange={(e) => setCompany(e.target.value)}
           placeholder="Enter a company name"
