@@ -14,7 +14,7 @@ export default function HomePage() {
   async function handleSearch() {
     setError(null);
     setData(null);
-    setSearched(true);
+    setSearched(false);
 
     const res = await fetch('/api/subsidiaries', {
       method: 'POST',
@@ -30,11 +30,13 @@ export default function HomePage() {
 
     const json = await res.json();
     setData(json.data || []);
+
+    setSearched(true);
   }
 
   const handleSubmit = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    setSearched(false);
     if (e.key === 'Enter') {
-      setSearched(true);
       // handleSearch();
       const res = await fetch('/api/supasearch', {
         method: 'POST',
@@ -45,6 +47,7 @@ export default function HomePage() {
       console.log('Search results:', result);
       setData(result.data || []);
     }
+    setSearched(true);
   }
 
   return (
