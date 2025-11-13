@@ -73,8 +73,8 @@ export default function HomePage() {
               <div className="company-clickable border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
                 <strong className="text-xl text-text-bright">{item.name}</strong>
                 <ul className="mt-2 text-text-primary">
-                  <li>Subsidiary companies: **number here**</li>
-                  <li>Tags: **some tags**</li>
+                  <li>Subsidiary companies: {item.subsidiaries.length}</li>
+                  <li>Tags: {item.tags}</li>
                 </ul>
               </div>
             </Link>
