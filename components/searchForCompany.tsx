@@ -78,7 +78,7 @@ export default function HomePage() {
             const subsidiariesParam = encodeURIComponent(JSON.stringify(item.subsidiaries || []));
             return (
               <Link href={`/viewgraph?heading=${encodeURIComponent(item?.name || '')}&subsidiaries=${subsidiariesParam}`} key={i}>
-                <div className="company-clickable border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
+                <div className="company-clickable mb-2 border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
                   <strong className="text-xl text-text-bright">{item.name}</strong>
                   <ul className="mt-2 text-text-primary">
                     <li>Subsidiary companies: {item.subsidiaries.length}</li>
