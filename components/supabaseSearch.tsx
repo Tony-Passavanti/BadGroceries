@@ -50,7 +50,6 @@ export async function supabaseSearch(name: string) {
             .select('company!company_parents_company_id_fkey(name)')
             .eq('parent', company.company_id);
         subsidiaryNames = (test || []).map((t: any) => t.company.name);
-        console.log('Subsidiary names from test query for', company.name, ':', subsidiaryNames);
 
         companyData.push({
             name: company.name,
