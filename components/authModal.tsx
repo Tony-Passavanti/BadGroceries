@@ -72,11 +72,12 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
             : 'You are now signed in.'
         );
         if (!isSignUp) {
-        setTimeout(onClose, 1200);
+          setTimeout(onClose, 1200);
         }
       }
-    } catch (err: any) {
-      setError(err?.message ?? 'Unexpected error');
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : null;
+      setError(message ?? 'Unexpected error');
     } finally {
       setSubmitting(false);
     }

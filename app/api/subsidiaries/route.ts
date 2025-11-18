@@ -42,7 +42,7 @@ export async function POST(req: Request) {
     const data = await res.json();
     // data has structure: { total: {...}, data: [ { companyName, ticker, cik, subsidiaries: [...] }, ... ] }
     return NextResponse.json(data);
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error('Error in /api/subsidiaries:', err);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }

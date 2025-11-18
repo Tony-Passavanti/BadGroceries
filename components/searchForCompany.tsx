@@ -1,19 +1,35 @@
 
 'use client';
-// 'use server';
 
 import React, { useState } from 'react';
-// import { createClient } from '@/utils/supabase/server';
 import Link from 'next/link';
+
+interface CompanySearchResult {
+  name: string;
+  tags: string;
+  subsidiaries: string[];
+}
+
+type ApiCompanyPayload = Partial<CompanySearchResult>;
+
+function normalizeCompany(payload: ApiCompanyPayload): CompanySearchResult {
+  return {
+    name: payload.name ?? 'Unknown Company',
+    tags: payload.tags ?? 'None',
+    subsidiaries: Array.isArray(payload.subsidiaries) ? payload.subsidiaries : [],
+  };
+}
 
 export default function HomePage() {
   const [company, setCompany] = useState('');
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<CompanySearchResult[] | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [searched, setSearched] = useState(false);
 
   async function handleSearch() {
     setError(null);
     setData(null);
+    setSearched(false);
 
     const res = await fetch('/api/subsidiaries', {
       method: 'POST',
@@ -27,23 +43,29 @@ export default function HomePage() {
       return;
     }
 
-    const json = await res.json();
-    setData(json.data || []);
+    const json: { data?: ApiCompanyPayload[] } = await res.json();
+    const normalized = Array.isArray(json.data) ? json.data.map(normalizeCompany) : [];
+    setData(normalized);
+
+    setSearched(true);
   }
 
-  const handleSubmit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSubmit = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      // handleSearch();
+      setSearched(false);
+      const res = await fetch('/api/supasearch', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: company }),
+      });
+      const result: { data?: ApiCompanyPayload[] } = await res.json();
+      const normalized = Array.isArray(result.data) ? result.data.map(normalizeCompany) : [];
+      setData(normalized);
+
+      setSearched(true);
     }
   }
-
-  /* async function supabaseSearch() {
-    setError(null);
-    setData(null);
-
-    const supabase = await createClient();
-    const { data: company } = await supabase.from("company").select()
-  }*/
 
   return (
     <main className="max-w-3xl mx-auto">
@@ -69,17 +91,26 @@ export default function HomePage() {
 
       {data && data.length > 0 && (
         <div className="mt-5 space-y-4">
-          {data.map((item: any, i: number) => (
-            <Link href={`/viewgraph?heading=${encodeURIComponent(item?.companyName || '')}`} key={i}>
-              <div className="company-clickable border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
-                <strong className="text-xl text-text-bright">{item.companyName}</strong>
-                <ul className="mt-2 text-text-primary">
-                  <li>Subsidiary companies: {item.subsidiaries.length}</li>
-                  <li>Tags: **some tags**</li>
-                </ul>
-              </div>
-            </Link>
-          ))}
+          {data.map((item, i) => {
+            const subsidiariesParam = encodeURIComponent(JSON.stringify(item.subsidiaries));
+            return (
+              <Link href={`/viewgraph?heading=${encodeURIComponent(item?.name || '')}&subsidiaries=${subsidiariesParam}`} key={i}>
+                <div className="company-clickable mb-2 border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
+                  <strong className="text-xl text-text-bright">{item.name}</strong>
+                  <ul className="mt-2 text-text-primary">
+                    <li>Subsidiary companies: {item.subsidiaries.length}</li>
+                    <li>Tags: {item.tags}</li>
+                  </ul>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
+
+      {searched && (!data || data.length === 0) && (
+        <div className="py-20 text-lg text-text-secondary italic text-center">
+          No results found
         </div>
       )}
     </main>
