@@ -58,7 +58,7 @@ function parseCompanyPayload(value: string | undefined): { company?: string; sub
     const subsidiaries = Array.isArray(companyPayload.subsidiaries)
       ? companyPayload.subsidiaries
           .filter((name: unknown): name is string => typeof name === 'string' && name.trim().length > 0)
-          .map((name) => ({ name }))
+          .map((name: any) => ({ name }))
       : EMPTY_SUBSIDIARIES;
 
     return { company, subsidiaries };

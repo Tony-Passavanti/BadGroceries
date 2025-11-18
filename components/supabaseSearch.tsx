@@ -2,10 +2,12 @@
 
 import { createClient } from '@/utils/supabase/server';
 
+interface TagRecord {
+  tag_name?: string | null;
+}
+
 interface TagRow {
-  tag?: {
-    tag_name?: string | null;
-  } | null;
+  tag?: TagRecord | TagRecord[] | null;
 }
 
 interface CompanyRow {
@@ -14,10 +16,10 @@ interface CompanyRow {
   company_tag: TagRow[] | null;
 }
 
+type SubsidiaryCompany = { name: string | null } | { name: string | null }[];
+
 interface SubsidiaryRow {
-  company: {
-    name: string | null;
-  } | null;
+  company: SubsidiaryCompany | null;
 }
 
 export interface SupabaseSearchResult {
@@ -38,11 +40,16 @@ export async function supabaseSearch(name: string) {
   const companyData: SupabaseSearchResult[] = [];
 
   for (const company of companyRows) {
-    const tags =
-      company.company_tag
-        ?.map((ct) => ct.tag?.tag_name)
-        .filter((tag): tag is string => Boolean(tag && tag.trim().length > 0))
-        .join(', ') || 'None';
+    const tagNames =
+      company.company_tag?.flatMap((ct) => {
+        if (!ct.tag) return [];
+        const tagEntries = Array.isArray(ct.tag) ? ct.tag : [ct.tag];
+        return tagEntries
+          .map((tag) => tag?.tag_name)
+          .filter((tagName): tagName is string => Boolean(tagName && tagName.trim().length > 0));
+      }) ?? [];
+
+    const tags = tagNames.length ? tagNames.join(', ') : 'None';
 
     const { data: rawSubsidiaries, error: subsErr } = await supabase
       .from('company_parents')
@@ -56,7 +63,11 @@ export async function supabaseSearch(name: string) {
 
     const subsidiaryRows: SubsidiaryRow[] = Array.isArray(rawSubsidiaries) ? rawSubsidiaries : [];
     const subsidiaries = subsidiaryRows
-      .map((record) => record.company?.name ?? '')
+      .flatMap((record) => {
+        if (!record.company) return [];
+        const companies = Array.isArray(record.company) ? record.company : [record.company];
+        return companies.map((entry) => entry.name ?? '');
+      })
       .filter((name): name is string => typeof name === 'string' && name.trim().length > 0);
 
     companyData.push({
