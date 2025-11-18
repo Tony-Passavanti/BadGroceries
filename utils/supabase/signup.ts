@@ -15,3 +15,10 @@ export async function signOut(): Promise<{ error: AuthError | null }> {
   const supabase = createBrowserSupabaseClient();
   return supabase.auth.signOut();
 }
+
+export async function signInWithGoogle() {
+  const supabase = createBrowserSupabaseClient();
+  return supabase.auth.signInWithOAuth({
+    provider: 'google',
+  });
+}
