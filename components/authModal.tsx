@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn, signUp } from '@/utils/supabase/signup';
+import { signIn, signUp, signInWithGoogle } from '@/utils/supabase/signup';
 
 type AuthModalProps = {
   open: boolean;
@@ -12,6 +12,7 @@ type AuthMode = 'sign-in' | 'sign-up';
 
 export default function AuthModal({ open, onClose }: AuthModalProps) {
   const [mode, setMode] = useState<AuthMode>('sign-in');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -30,6 +31,7 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
     setPassword('');
     setConfirmPassword('');
   }
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -173,6 +175,12 @@ export default function AuthModal({ open, onClose }: AuthModalProps) {
                   ? 'Create account'
                   : 'Sign in'}
             </button>
+            <button
+              type="button"
+              onClick={() => signInWithGoogle()}
+              className="inline-flex w-full items-center justify-center rounded-lg px-4 py-2 disabled:opacity-60">
+                Sign in with Google
+              </button>
           </form>
 
           <p className="mt-3 text-xs text-text-secondary">
