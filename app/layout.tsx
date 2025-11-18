@@ -31,7 +31,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   } = await supabase.auth.getUser();
   return (
     <html lang="en">
-      <script src="https://accounts.google.com/gsi/client" async></script>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <LayoutShell initialUser={user}>{children}</LayoutShell>
       </body>
