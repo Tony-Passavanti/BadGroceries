@@ -2,12 +2,27 @@
 'use client';
 
 import React, { useState } from 'react';
-// import { supabaseSearch } from '@/components/supabaseSearch';
 import Link from 'next/link';
+
+interface CompanySearchResult {
+  name: string;
+  tags: string;
+  subsidiaries: string[];
+}
+
+type ApiCompanyPayload = Partial<CompanySearchResult>;
+
+function normalizeCompany(payload: ApiCompanyPayload): CompanySearchResult {
+  return {
+    name: payload.name ?? 'Unknown Company',
+    tags: payload.tags ?? 'None',
+    subsidiaries: Array.isArray(payload.subsidiaries) ? payload.subsidiaries : [],
+  };
+}
 
 export default function HomePage() {
   const [company, setCompany] = useState('');
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<CompanySearchResult[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [searched, setSearched] = useState(false);
 
@@ -28,8 +43,9 @@ export default function HomePage() {
       return;
     }
 
-    const json = await res.json();
-    setData(json.data || []);
+    const json: { data?: ApiCompanyPayload[] } = await res.json();
+    const normalized = Array.isArray(json.data) ? json.data.map(normalizeCompany) : [];
+    setData(normalized);
 
     setSearched(true);
   }
@@ -43,9 +59,9 @@ export default function HomePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: company }),
       });
-      const result = await res.json();
-      console.log('Search results:', result);
-      setData(result.data || []);
+      const result: { data?: ApiCompanyPayload[] } = await res.json();
+      const normalized = Array.isArray(result.data) ? result.data.map(normalizeCompany) : [];
+      setData(normalized);
 
       setSearched(true);
     }
@@ -75,8 +91,8 @@ export default function HomePage() {
 
       {data && data.length > 0 && (
         <div className="mt-5 space-y-4">
-          {data.map((item: any, i: number) => {
-            const subsidiariesParam = encodeURIComponent(JSON.stringify(item.subsidiaries || []));
+          {data.map((item, i) => {
+            const subsidiariesParam = encodeURIComponent(JSON.stringify(item.subsidiaries));
             return (
               <Link href={`/viewgraph?heading=${encodeURIComponent(item?.name || '')}&subsidiaries=${subsidiariesParam}`} key={i}>
                 <div className="company-clickable mb-2 border border-border rounded-lg p-4 bg-bg-panel cursor-pointer hover:bg-hover transition-colors">
