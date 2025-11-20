@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from supabase import create_client, Client
+from config import SUPABASE_URL, SUPABASE_KEY
 
-from ..config import SUPABASE_URL, SUPABASE_KEY
 
 @dataclass(frozen = True)
 class Supa:
@@ -18,6 +18,7 @@ class Supa:
 
 if __name__ == '__main__':
     import sys; sys.dont_write_bytecode = True
+    from pprint import pprint
     
     # test connection
     supa = Supa.create()
@@ -28,9 +29,9 @@ if __name__ == '__main__':
     try:
         # list tables or do a simple health check
         result = supa.client.table('company').select('*').limit(1).execute()
-        print(f'✓ Connection successful! Found {len(result.data)} record(s)')
+        print(f'in Borat voice: "Great Success!" Found {len(result.data)} record(s)')
         if result.data:
-            print(f'Sample record: {result.data[0]}')
+            pprint(f'Sample record: {result.data[0]}')
     except Exception as e:
-        print(f'✗ Connection test failed: {e}')
+        print(f'✗ fatality: {e}')
 

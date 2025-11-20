@@ -4,9 +4,10 @@ sys.dont_write_bytecode = True
 from pathlib import Path
 from dotenv import load_dotenv
 
-# paths / files
+# paths / files / URLs
 ROOT = Path(__file__).parent.parent
 ENV = ROOT / '.env.local'
+SEC_SUBS_URL = 'https://api.sec-api.io/subsidiaries'
 
 # envars
 load_dotenv(ENV)
