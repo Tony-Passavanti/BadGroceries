@@ -1,3 +1,6 @@
+'''
+simple stash of the global variables to centralize where all major variables are kept
+'''
 import os, sys
 sys.dont_write_bytecode = True
 

@@ -1,3 +1,7 @@
+'''
+factory class for the Supabase client
+'''
+
 from __future__ import annotations
 
 from dataclasses import dataclass
