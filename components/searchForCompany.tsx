@@ -27,43 +27,35 @@ export default function HomePage() {
   const [searched, setSearched] = useState(false);
 
   async function handleSearch() {
-    setError(null);
-    setData(null);
-    setSearched(false);
-
-    const res = await fetch('/api/subsidiaries', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ company }),
-    });
-
-    if (!res.ok) {
-      const err = await res.json();
-      setError(err.error || 'Error');
-      return;
-    }
-
-    const json: { data?: ApiCompanyPayload[] } = await res.json();
-    const normalized = Array.isArray(json.data) ? json.data.map(normalizeCompany) : [];
-    setData(normalized);
-
-    setSearched(true);
+    performSearch();
   }
 
   const handleSubmit = async (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      // handleSearch();
-      setSearched(false);
+      performSearch();
+    }
+  }
+
+  async function performSearch() {
+    setError(null);
+    setData(null);
+    setSearched(false);
+
+    if (company.length > 3) {
       const res = await fetch('/api/supasearch', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: company }),
       });
+      
       const result: { data?: ApiCompanyPayload[] } = await res.json();
       const normalized = Array.isArray(result.data) ? result.data.map(normalizeCompany) : [];
       setData(normalized);
 
       setSearched(true);
+
+    } else {
+      setError('');
     }
   }
 
@@ -111,6 +103,12 @@ export default function HomePage() {
       {searched && (!data || data.length === 0) && (
         <div className="py-20 text-lg text-text-secondary italic text-center">
           No results found
+        </div>
+      )}
+
+      {!searched && error === '' && (
+        <div className="py-20 text-lg text-text-secondary italic text-center">
+          Company search query must be at least 4 characters long.
         </div>
       )}
     </main>
