@@ -38,4 +38,4 @@ if __name__ == '__main__':
             pprint(f'Sample record: {result.data[0]}')
     except Exception as e:
         print(f'✗ fatality: {e}')
-
+    
