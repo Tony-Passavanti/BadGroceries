@@ -24,6 +24,9 @@ assert SEC_KEY, "SEC_API_KEY environment variable is not set"
 
 # ansi codes
 CLEAR = '\033c'
+PURPLE = '\033[38;2;255;0;255m'                  # true RGB cyan
+RESET = '\033[0m'
 OK = '[\033[38;2;0;255;0mok\033[0m]'           # true RGB green
 WARN = '[\033[38;2;255;255;0mwarn\033[0m]'     # true RGB yellow
 ERROR = '[\033[38;2;255;0;0mfatality\033[0m]'     # true RGB red
+INFO = '[\033[38;2;255;255;255minfo\033[0m]'

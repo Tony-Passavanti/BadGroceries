@@ -4,16 +4,16 @@ utility functions for console UI and formatting.
 
 import os
 import shutil
-from config import ERROR
+from config import ERROR, PURPLE, RESET
 
 WIDTH = shutil.get_terminal_size().columns - 2
 
 
-def heading(text: str = '- BadGroceries Admin Console -', subtitle: bool = True):
+def heading(text: str = f'- BadGroceries Admin Console -', subtitle: bool = True):
     '''print a capitalized heading bordered with equal signs.'''
     capitalized = text.upper()
     print('\n' + '=' * WIDTH)
-    print(f'  \033[1m{capitalized:^{WIDTH}}\033[0m')
+    print(f'  {PURPLE}\033[1m{capitalized:^{WIDTH}}\033[0m')
     if subtitle:
         print(f'\033[3m{"This tool allows you to search for subsidiaries and publish them into the database.":^{WIDTH}}\033[0m')
     print('=' * WIDTH + '\n')

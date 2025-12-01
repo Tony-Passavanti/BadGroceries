@@ -40,12 +40,33 @@ class SecAPI:
         response.raise_for_status()
         return response.json()
 
-    def get_recent_subsidiaries(self, company_name: str, max_count: int = 5) -> tuple[list[dict], int]:
-        '''get the most recent subsidiaries for a company, returns (subsidiaries, total_count).'''
+    def get_recent_subsidiaries(self, company_name: str, max_subs: int = 5) -> tuple[dict | None, int]:
+        '''get the most recent company result with its subsidiaries, returns (company_data, total_subsidiaries).
+        returns only the FIRST company match and limits its subsidiaries to max_subs.
+        '''
         result = self.search_subsidiaries(company_name)
-        total = result.get('totalResults', 0)
-        subsidiaries = result.get('results', [])[:max_count]
-        return subsidiaries, total
+        # SEC API returns { total: {...}, data: [ { companyName, ticker, cik, subsidiaries: [...] }, ... ] }
+        data = result.get('data', [])
+
+        if not data:
+            return None, 0
+
+        # get only the first company result
+        first_company = data[0]
+        all_subsidiaries = first_company.get('subsidiaries', [])
+
+        # filter out junk entries like 'plaintext', 'name', etc.
+        valid_subsidiaries = [
+            sub for sub in all_subsidiaries
+            if sub.get('name', '').strip() and sub.get('name') not in ['plaintext', 'name']
+        ]
+
+        total_subs = len(valid_subsidiaries)
+
+        # limit to max_subs
+        first_company['subsidiaries'] = valid_subsidiaries[:max_subs]
+
+        return first_company, total_subs
 
 
 if __name__ == '__main__':

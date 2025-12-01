@@ -32,18 +32,22 @@ class Supa:
             }).execute()
             return insert_result.data[0]['company_id']
 
-    def insert_subsidiaries(self, parent_company_id: int, subsidiaries: list[dict]) -> bool:
-        '''insert subsidiaries and their parent relationship into database.'''
+    def insert_subsidiaries(self, parent_company_id: int, company_data_list: list[dict]) -> bool:
+        '''insert subsidiaries and their parent relationship into database.
+        expects company_data_list to be SEC API format: [{ companyName, subsidiaries: [{name, ...}, ...] }, ...]
+        '''
         try:
-            for sub in subsidiaries:
-                sub_name = sub.get('companyName', 'Unknown')
-                sub_id = self.get_or_create_company(sub_name)
+            for company_data in company_data_list:
+                subsidiaries = company_data.get('subsidiaries', [])
+                for sub in subsidiaries:
+                    sub_name = sub.get('name', 'Unknown')
+                    sub_id = self.get_or_create_company(sub_name)
 
-                # insert parent-subsidiary relationship
-                self.client.table('company_parents').insert({
-                    'company_id': sub_id,
-                    'parent': parent_company_id
-                }).execute()
+                    # insert parent-subsidiary relationship
+                    self.client.table('company_parents').insert({
+                        'company_id': sub_id,
+                        'parent': parent_company_id
+                    }).execute()
 
             return True
         except Exception as e:
