@@ -1,0 +1,32 @@
+'''
+simple stash of the global variables to centralize where all major variables are kept
+'''
+import os, sys
+sys.dont_write_bytecode = True
+
+from pathlib import Path
+from dotenv import load_dotenv
+
+# paths / files / URLs
+ROOT = Path(__file__).parent.parent
+ENV = ROOT / '.env.local'
+SEC_SUBS_URL = 'https://api.sec-api.io/subsidiaries'
+
+# envars
+load_dotenv(ENV)
+SUPABASE_URL = os.environ.get('NEXT_PUBLIC_SUPABASE_URL')
+SUPABASE_KEY = os.environ.get('NEXT_PUBLIC_SUPABASE_ANON_KEY')
+SEC_KEY = os.environ.get('SEC_API_KEY')
+
+assert SUPABASE_URL, "NEXT_PUBLIC_SUPABASE_URL environment variable is not set"
+assert SUPABASE_KEY, "NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable is not set"
+assert SEC_KEY, "SEC_API_KEY environment variable is not set"
+
+# ansi codes
+CLEAR = '\033c'
+PURPLE = '\033[38;2;255;0;255m'                  # true RGB cyan
+RESET = '\033[0m'
+OK = '[\033[38;2;0;255;0mok\033[0m]'           # true RGB green
+WARN = '[\033[38;2;255;255;0mwarn\033[0m]'     # true RGB yellow
+ERROR = '[\033[38;2;255;0;0mfatality\033[0m]'     # true RGB red
+INFO = '[\033[38;2;255;255;255minfo\033[0m]'
