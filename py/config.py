@@ -21,3 +21,9 @@ SEC_KEY = os.environ.get('SEC_API_KEY')
 assert SUPABASE_URL, "NEXT_PUBLIC_SUPABASE_URL environment variable is not set"
 assert SUPABASE_KEY, "NEXT_PUBLIC_SUPABASE_ANON_KEY environment variable is not set"
 assert SEC_KEY, "SEC_API_KEY environment variable is not set"
+
+# ansi codes
+CLEAR = '\033c'
+OK = '[\033[38;2;0;255;0mok\033[0m]'           # true RGB green
+WARN = '[\033[38;2;255;255;0mwarn\033[0m]'     # true RGB yellow
+ERROR = '[\033[38;2;255;0;0mfatality\033[0m]'     # true RGB red

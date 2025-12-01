@@ -40,6 +40,13 @@ class SecAPI:
         response.raise_for_status()
         return response.json()
 
+    def get_recent_subsidiaries(self, company_name: str, max_count: int = 5) -> tuple[list[dict], int]:
+        '''get the most recent subsidiaries for a company, returns (subsidiaries, total_count).'''
+        result = self.search_subsidiaries(company_name)
+        total = result.get('totalResults', 0)
+        subsidiaries = result.get('results', [])[:max_count]
+        return subsidiaries, total
+
 
 if __name__ == '__main__':
     import sys; sys.dont_write_bytecode = True
