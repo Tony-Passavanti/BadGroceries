@@ -83,7 +83,9 @@ def main():
             time.sleep(STATUS_DELAY)
 
             try:
-                parent_id = DB.get_or_create_company(company_name)
+                # use the official company name from SEC API, not user input
+                official_company_name = company_data.get('companyName', company_name)
+                parent_id = DB.get_or_create_company(official_company_name)
                 DB.insert_subsidiaries(parent_id, [company_data])
                 # count subsidiaries
                 num_subs = len(company_data.get('subsidiaries', []))
