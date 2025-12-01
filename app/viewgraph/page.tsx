@@ -29,7 +29,8 @@ function parseStringArray(value: string | undefined): SubsidiaryItem[] {
     if (Array.isArray(parsed)) {
       return parsed
         .filter((name): name is string => typeof name === 'string' && name.trim().length > 0)
-        .map((name) => ({ name }));
+        .map((name) => ({ name }))
+        .slice(0, 5);
     }
   } catch (error) {
     console.error('Error parsing subsidiaries array', error);
@@ -59,6 +60,7 @@ function parseCompanyPayload(value: string | undefined): { company?: string; sub
       ? companyPayload.subsidiaries
           .filter((name: unknown): name is string => typeof name === 'string' && name.trim().length > 0)
           .map((name: any) => ({ name }))
+          .slice(0, 5)
       : EMPTY_SUBSIDIARIES;
 
     return { company, subsidiaries };
@@ -78,8 +80,8 @@ export default async function Viewgraph({ searchParams }: { searchParams: Search
   const companyName = companyFromPayload || params.heading || 'Unknown Company';
 
   return (
-    <main>
+    <div className="absolute inset-0 top-16 overflow-auto">
       <ViewSubsidiaryTree companyName={companyName} subsidiaries={subsidiaries} />
-    </main>
+    </div>
   );
 }

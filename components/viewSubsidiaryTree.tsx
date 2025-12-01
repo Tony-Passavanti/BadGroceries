@@ -94,7 +94,8 @@ export default function ViewSubsidiaryTree({ companyName, subsidiaries }: ViewSu
       const children =
         companyMatch?.subsidiaries
           ?.filter((name): name is string => typeof name === 'string' && name.trim().length > 0)
-          .map((name) => ({ name })) || [];
+          .map((name) => ({ name }))
+          .slice(0, 5) || [];
 
       if (children.length === 0) {
         setLevels((prev) => prev.slice(0, levelIndex + 1));
@@ -173,20 +174,17 @@ function TreeLevel({
 }: TreeLevelProps) {
   const count = level.subsidiaries.length;
   const rowWidth = count * CHILD_CARD_WIDTH + Math.max(count - 1, 0) * CHILD_GAP;
-  const horizontalLineWidth = Math.max(rowWidth - CHILD_CARD_WIDTH, 0);
+  const horizontalLineWidth = count > 1 ? rowWidth - CHILD_CARD_WIDTH : 0;
   const hasMultiple = count > 1;
 
   if (count === 0) return null;
 
   return (
     <div className="w-full flex flex-col items-center overflow-visible">
-      <div className="w-full overflow-visible">
-        <div
-          className="mx-auto flex flex-col items-center"
-          style={{ width: `${rowWidth}px`, transform: `translateX(${level.anchorOffset}px)` }}
-        >
-          <div className={`w-[3px] bg-border ${isFirstLevel ? 'h-10' : 'h-12'}`} />
+      <div className="relative w-full overflow-visible">
+        <div className="absolute w-[3px] bg-border" style={{ height: isFirstLevel ? '40px' : '48px', left: '50%', transform: `translateX(calc(${level.anchorOffset}px - 1.5px))` }} />
 
+        <div className="flex flex-col items-center" style={{ width: `${rowWidth}px`, marginLeft: '50%', transform: `translateX(calc(${level.anchorOffset}px - ${rowWidth / 2}px))`, marginTop: isFirstLevel ? '40px' : '48px' }}>
           <div className="relative w-full">
             {hasMultiple && (
               <>
